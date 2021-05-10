@@ -3,9 +3,9 @@ import { Auth } from 'aws-amplify';
 import { IUser } from "interfaces/user.interface"
 
 AWS.config.update({
-  region: "eu-west-1",
-  'accessKeyId': "AKIAWE4P62PW7UO2VNMH",
-  'secretAccessKey': "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"
+  region: process.env.AWS_REGION,
+  'accessKeyId': process.env.AWS_ACCESS_KEY_ID,
+  'secretAccessKey': process.env.AWS_ACCESS_KEY
 });
 
 const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
