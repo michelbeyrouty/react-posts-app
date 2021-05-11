@@ -1,35 +1,61 @@
 import React from 'react';
 import { HeaderBar } from 'components/headerbar';
-import { fetchCurrentUser, listUsers } from 'api/adminAPI';
-import { IUser } from "../../interfaces/user.interface"
-import UserList from "components/UserList"
+import { fetchCurrentUser } from 'api/adminAPI';
+import { IUser } from "../../interfaces/user.interface";
+import UserPage from "components/UserPage";
+import { UserPageProps } from "../../interfaces/user.interface"
+import { disableUser, resetUserPassword} from "../../api/adminAPI"
+//import { fetchUserTableData } from 'api/postAPI';
 
 const AdminPage: React.FC = () => {
 
-  const [userList, setUserList] = React.useState<[] | IUser[]>([]);
+  //const [userTableData, setUserTableData] = React.useState<[] | UserPageData[]>([]);
   const [currentUser, setCurrentUser] = React.useState<IUser>({
     username: ""
   });
 
   React.useEffect(() => {
     const renderPosts = async () => {
-      const userList = await listUsers();
       const user = await fetchCurrentUser();
-
-      if (userList) setUserList(userList);
       if (user) setCurrentUser(user);
 
     };
     renderPosts();
-  }, [userList]);
+  }, []);
 
 
   return (
     <>
       <HeaderBar title={"Admin Page of " + currentUser.username} />
-      <UserList userList={userList} />
+      <UserPage 
+      userList={userTableData.userList} 
+      disableUser={disableUser} 
+      resetUserPassword={resetUserPassword}
+      totalPosts={userTableData.totalPosts}
+      totalComments={userTableData.totalComments}
+         />
     </>
   )
 };
 
 export default AdminPage;
+
+
+const userTableData: UserPageProps = {
+userList: [
+  {
+      username: "michel",
+      numberOfPosts: 2,
+      numberOfComments: 2
+  },
+  {
+    username: "aziz",
+    numberOfPosts: 2,
+    numberOfComments: 2
+  }
+],
+disableUser,
+resetUserPassword,
+totalPosts: 3 ,
+totalComments: 3 ,
+}
