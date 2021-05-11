@@ -5,7 +5,9 @@ import { IUser } from "../../interfaces/user.interface";
 import UserPage from "components/UserPage";
 import { disableUser, resetUserPassword} from "../../api/adminAPI"
 import { fetchUserTableData } from 'api/adminAPI';
-import { IUserTableData } from "../../interfaces/user.interface"
+import { IUserTableData } from "../../interfaces/user.interface";
+import { AmplifySignOut } from '@aws-amplify/ui-react';
+
 
 const AdminPage: React.FC = () => {
 
@@ -37,6 +39,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <>
+      <AmplifySignOut/>
       <HeaderBar title={"Admin Page of " + currentUser.username} />
       <UserPage 
       userList={localUserTableData.userList} 
@@ -52,19 +55,19 @@ const AdminPage: React.FC = () => {
 export default AdminPage;
 
 
-const userTableData2 = {
-userList: [
-  {
-      username: "michel",
-      numberOfPosts: 2,
-      numberOfComments: 2
-  },
-  {
-    username: "aziz",
-    numberOfPosts: 2,
-    numberOfComments: 2
-  }
-],
-totalPosts: 3 ,
-totalComments: 3 ,
-}
+// const userTableData2 = {
+// userList: [
+//   {
+//       username: "michel",
+//       numberOfPosts: 2,
+//       numberOfComments: 2
+//   },
+//   {
+//     username: "aziz",
+//     numberOfPosts: 2,
+//     numberOfComments: 2
+//   }
+// ],
+// totalPosts: 3 ,
+// totalComments: 3 ,
+// }
