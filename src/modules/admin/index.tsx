@@ -3,24 +3,35 @@ import { HeaderBar } from 'components/headerbar';
 import { fetchCurrentUser } from 'api/adminAPI';
 import { IUser } from "../../interfaces/user.interface";
 import UserPage from "components/UserPage";
-import { UserPageProps } from "../../interfaces/user.interface"
 import { disableUser, resetUserPassword} from "../../api/adminAPI"
-//import { fetchUserTableData } from 'api/postAPI';
+import { fetchUserTableData } from 'api/adminAPI';
+import { IUserTableData } from "../../interfaces/user.interface"
 
 const AdminPage: React.FC = () => {
 
-  //const [userTableData, setUserTableData] = React.useState<[] | UserPageData[]>([]);
+  const [localUserTableData, setLocalUserTableData] = React.useState<IUserTableData>({
+    userList: [],
+    totalComments: 0,
+    totalPosts: 0
+  });
   const [currentUser, setCurrentUser] = React.useState<IUser>({
     username: ""
   });
 
   React.useEffect(() => {
-    const renderPosts = async () => {
+
+    const renderData = async () => {
       const user = await fetchCurrentUser();
+      const { userTableData } = await fetchUserTableData()
+
       if (user) setCurrentUser(user);
+      if(userTableData) setLocalUserTableData(userTableData)
+      
 
     };
-    renderPosts();
+
+    renderData();
+    
   }, []);
 
 
@@ -28,11 +39,11 @@ const AdminPage: React.FC = () => {
     <>
       <HeaderBar title={"Admin Page of " + currentUser.username} />
       <UserPage 
-      userList={userTableData.userList} 
+      userList={localUserTableData.userList} 
       disableUser={disableUser} 
       resetUserPassword={resetUserPassword}
-      totalPosts={userTableData.totalPosts}
-      totalComments={userTableData.totalComments}
+      totalPosts={localUserTableData.totalPosts}
+      totalComments={localUserTableData.totalComments}
          />
     </>
   )
@@ -41,7 +52,7 @@ const AdminPage: React.FC = () => {
 export default AdminPage;
 
 
-const userTableData: UserPageProps = {
+const userTableData2 = {
 userList: [
   {
       username: "michel",
@@ -54,8 +65,6 @@ userList: [
     numberOfComments: 2
   }
 ],
-disableUser,
-resetUserPassword,
 totalPosts: 3 ,
 totalComments: 3 ,
 }

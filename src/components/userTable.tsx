@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { UserTableData } from "../interfaces/user.interface"
+import { IUserStatistics } from "../interfaces/user.interface"
 
 const useStyles = makeStyles({
   table: {
@@ -57,3 +57,10 @@ const UserTable: React.FC<UserTableData> = ({
 }
 
 export default UserTable;
+
+
+export interface UserTableData {
+  userList: IUserStatistics[];
+  disableUser: (Username: string) => Promise<any>;
+  resetUserPassword: (Password: string, Username: string) => Promise<any>;
+}

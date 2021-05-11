@@ -1,6 +1,9 @@
 import AWS from 'aws-sdk';
 import { Auth } from 'aws-amplify';
 import { IUser } from "interfaces/user.interface"
+import { INTERNAL_API } from './api';
+import { statisticsRootResponse } from "../interfaces/user.interface"
+
 
 AWS.config.update({
   region: process.env.AWS_REGION,
@@ -98,3 +101,11 @@ export const resetUserPassword = async (Username: string, Password: string) => {
 
   });
 }
+
+
+export const fetchUserTableData = async () => {
+
+  const response = await INTERNAL_API.get<statisticsRootResponse>('/statistics');
+
+  return response.data;
+};

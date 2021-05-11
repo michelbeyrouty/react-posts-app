@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserPageProps } from "../interfaces/user.interface"
+import { IUserStatistics } from "../interfaces/user.interface"
 import UserTable from "./userTable"
 import AppStatisticsCard from "./AppStatisticsCard"
 
@@ -20,3 +20,13 @@ const UserPage: React.FC<UserPageProps> = ({
 };
 
 export default UserPage;
+
+
+export interface UserPageProps {
+    userList: IUserStatistics[];
+    totalPosts: number ;
+    totalComments: number ;
+    disableUser: (Username: string) => Promise<any>;
+    resetUserPassword: (Password: string, Username: string) => Promise<any>;
+  
+  }
